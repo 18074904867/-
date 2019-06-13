@@ -1,0 +1,51 @@
+public class bestLoading {
+    static int n;//集装箱数量
+    static int []w;//箱子重量数组
+    static int c;//第一艘船的载重
+    static int cw;//当前的载重量
+    static int bestw;//最优载重
+    static int r;//剩余集装箱的重量
+    public static int maxLoading(int []ww,int cc){
+        n=ww.length-1;
+        w=ww;
+        c=cc;
+        cw=0;
+        bestw=0;
+        r=0;
+        for(int i=1;i<=n;i++){
+            r+=w[i];//遍历所有集装箱
+        }
+        backtrack(0);
+        return bestw;   
+    }
+
+    private static void backtrack(int i){
+        if(i>n){//如果抵达叶子节点
+            if(cw>bestw) bestw=cw;//判断当前载重量是否为最优解
+            return;
+        }
+        r-=w[i];//放入一个集装箱
+        if(cw+w[i]<=c){//如果当前集装箱能放入
+            cw+=w[i];//加入当前载重量
+            backtrack(i+1);//
+            cw-=w[i];//回溯
+        }
+        //遍历右子树，当前集装箱无法放入的情况下
+        if(cw+r>bestw)//如果当前重量加上剩余集装箱的重量比最优解重
+            backtrack(i+1);
+        r+=w[i];//不放入当前集装箱，恢复剩余集装箱重量
+
+    }
+    /*
+	 * 如果当前节点的右子树不可能包含比当前最优解更好的解时，就不移动到右子树上！
+
+	设bestw为当前最优解，Z为解空间树的第i 层的一个节点
+为剩余货箱的重量;
+    当cw+r<=bestw时，没有必要去搜索Z 的右子树 */
+    public static void main(String []args){
+     int []ww={1,7,4,20,9,11};
+     int c=26;
+     System.out.println(maxLoading(ww,c));
+    }
+
+}

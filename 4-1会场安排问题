@@ -1,0 +1,35 @@
+#include<iostream>
+#include<algorithm>
+#define  MAX_NUM 50
+using namespace std;
+typedef struct tnode{
+      int start;    //起始时间
+      int end;     //结束时间
+}tnode,Tnode[MAX_NUM];
+bool cmp(tnode a,tnode b){   //自定义对活动结束时间进行排序
+     return a.end<b.end;
+}
+int MinArrange(int n){
+     Tnode t;
+     for(int i=0;i<n;i++){
+         cin>>t[i].start>>t[i].end;//初始化数据
+     }
+     sort(t,t+n,cmp);//对活动结束时间进行从小到大排序
+     int count = 1;
+     int item = t[0].end;       //排序后第一个计入总规划中
+     for(int j = 1;j<n;j++){
+        if(t[j].start>=item){  //找出在活动结束后的最小起始时间的下一活动
+            item = t[j].end;
+            count++;
+        }else{
+            ;
+        }
+     }
+     return count;
+}
+int main(){
+    int n;
+    cin>>n;
+    cout<<"使用最少会场数为:"<<MinArrange(n);
+    return 0;
+}
